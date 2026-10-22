@@ -1,6 +1,9 @@
 # Real Mob Filter
 Server-side filter for **natural** spawns, per entity type.
 
+[![Modrinth](https://img.shields.io/modrinth/dt/jahus-realmobfilter?logo=modrinth&label=Modrinth)](https://modrinth.com/datapack/jahus-realmobfilter)
+[![CurseForge](https://img.shields.io/curseforge/dt/1760077?logo=curseforge&label=CurseForge)](https://www.curseforge.com/projects/1760077)
+
 No Fabric API, no commands. No `/reload`, restart after editing.
 
 Works for any entity, vanilla or not, as long as the spawn goes through the natural spawner (`NaturalSpawner`).
