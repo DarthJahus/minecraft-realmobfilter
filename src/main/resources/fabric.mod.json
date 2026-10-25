@@ -7,7 +7,7 @@
   "authors": ["DarthJahus"],
   "contact": {},
   "license": "Apache-2.0",
-  "environment": "server",
+  "environment": "*",
   "entrypoints": {
     "main": ["net.jahus.realmobfilter.RealMobFilter"]
   },
