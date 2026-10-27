@@ -2,11 +2,11 @@ package net.jahus.realmobfilter.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.jahus.realmobfilter.RealMobFilter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public final class ModConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    private static final Path PATH = FabricLoader.getInstance().getConfigDir().resolve("realmobfilter.json");
+    private static final Path PATH = FMLPaths.CONFIGDIR.get().resolve("realmobfilter.json");
 
     private static Data data = Data.defaults();
 
@@ -33,7 +33,7 @@ public final class ModConfig {
         if (!Files.exists(PATH)) {
             data = Data.defaults();
             save();
-            RealMobFilter.LOGGER.info("Wrote default config to {} (enabled=false)", PATH);
+            RealMobFilter.LOGGER.info("Wrote default config to {}", PATH.toAbsolutePath());
             return;
         }
         try (Reader reader = Files.newBufferedReader(PATH)) {
@@ -44,15 +44,14 @@ public final class ModConfig {
             }
             Map<String, Double> parsed = new LinkedHashMap<>();
             for (Map.Entry<String, Double> e : data.entities.entrySet()) {
-                if (e.getKey() == null || e.getValue() == null) {
-                    continue;
-                }
-                Identifier id = Identifier.tryParse(e.getKey());
+                String key = e.getKey();
+                Double p = e.getValue();
+                if (key == null || p == null) continue;
+                Identifier id = Identifier.tryParse(key);
                 if (id == null) {
-                    RealMobFilter.LOGGER.warn("Ignoring invalid entity id '{}'", e.getKey());
+                    RealMobFilter.LOGGER.warn("Skipping invalid entity id '{}'", key);
                     continue;
                 }
-                double p = e.getValue();
                 if (p < 0.0 || p > 1.0) {
                     RealMobFilter.LOGGER.warn("Clamping {} from {} into [0, 1]", id, p);
                     p = Math.clamp(p, 0.0, 1.0);
