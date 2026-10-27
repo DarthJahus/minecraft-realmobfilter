@@ -1,16 +1,17 @@
 package net.jahus.realmobfilter;
 
-import net.fabricmc.api.ModInitializer;
+import com.mojang.logging.LogUtils;
 import net.jahus.realmobfilter.config.ModConfig;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class RealMobFilter implements ModInitializer {
+@Mod(RealMobFilter.MOD_ID)
+public class RealMobFilter {
     public static final String MOD_ID = "realmobfilter";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Logger LOGGER = LogUtils.getLogger();
 
-    @Override
-    public void onInitialize() {
+    public RealMobFilter(IEventBus modEventBus) {
         ModConfig.load();
         LOGGER.info("Real Mob Filter loaded (enabled={}, entries={})", ModConfig.isEnabled(), ModConfig.size());
     }
