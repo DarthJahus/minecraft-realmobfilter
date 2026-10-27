@@ -6,7 +6,7 @@ import net.jahus.realmobfilter.RealMobFilter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -95,9 +95,7 @@ public final class ModConfig {
         return data != null && data.entities != null ? data.entities.size() : 0;
     }
 
-    /**
-     * @return true if this natural spawn attempt may continue
-     */
+    /** @return true if this natural spawn attempt may continue */
     public static boolean allow(EntityType<?> type) {
         if (!isEnabled() || data.entities == null || data.entities.isEmpty() || type == null) {
             return true;
